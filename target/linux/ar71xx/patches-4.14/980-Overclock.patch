@@ -1,0 +1,12 @@
+--- a/arch/mips/include/asm/mach-ath79/kernel-entry-init.h
++++ b/arch/mips/include/asm/mach-ath79/kernel-entry-init.h
+@@ -23,6 +23,8 @@
+ 	and	t0, t1
+ 	ori	t0, CONF_CM_CACHABLE_NONCOHERENT
+ 	mtc0	t0, CP0_CONFIG
++	li t2, 0xc0140188
++	sw t2, 0x18050000
+ 	nop
+ 	.endm
+ 
+

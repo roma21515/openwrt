@@ -2,9 +2,6 @@
 .DS_Store
 .*.swp
 /env
-/dl
-/.config
-/.config.old
 /bin
 /build_dir
 /staging_dir
@@ -12,11 +9,9 @@
 /logs
 /feeds
 /feeds.conf
-/files
 /overlay
 /package/feeds
 /package/openwrt-packages
-/*.patch
 key-build*
 *.orig
 *.rej
