@@ -1,0 +1,47 @@
+#!/bin/sh
+
+#logger -s "*  *  *  *  Скрипт для установки уровня лога  HOSTAPD запущен  *  *  *  *"
+
+config_file="/etc/config/wireless"
+log_level_radio0=$(grep -E "^\s*config\s+wifi-device\s+'radio0'" -A 10 "$config_file" | awk '/option log_level/ {print $3}')
+log_level_radio1=$(grep -E "^\s*config\s+wifi-device\s+'radio1'" -A 10 "$config_file" | awk '/option log_level/ {print $3}')
+
+# Обработка уровня журналирования для radio0
+if [ "$log_level_radio0" = "'5'" ]; then
+    log_level_radio0="ERROR"
+elif [ "$log_level_radio0" = "'4'" ]; then
+    log_level_radio0="WARNING"
+elif [ "$log_level_radio0" = "'3'" ]; then
+    log_level_radio0="INFO"
+elif [ "$log_level_radio0" = "'2'" ]; then
+    log_level_radio0="DEBUG"
+elif [ "$log_level_radio0" = "'1'" ]; then
+    log_level_radio0="MSGDUMP"
+elif [ "$log_level_radio0" = "'0'" ]; then
+    log_level_radio0="EXCESSIVE"
+else
+    exit 1
+fi
+
+# Обработка уровня журналирования для radio1
+if [ "$log_level_radio1" = "'5'" ]; then
+    log_level_radio1="ERROR"
+elif [ "$log_level_radio1" = "'4'" ]; then
+    log_level_radio1="WARNING"
+elif [ "$log_level_radio1" = "'3'" ]; then
+    log_level_radio1="INFO"
+elif [ "$log_level_radio1" = "'2'" ]; then
+    log_level_radio1="DEBUG"
+elif [ "$log_level_radio1" = "'1'" ]; then
+    log_level_radio1="MSGDUMP"
+elif [ "$log_level_radio1" = "'0'" ]; then
+    log_level_radio1="EXCESSIVE"
+else
+    exit 1
+fi
+
+# Установка уровня журналирования для radio0
+hostapd_cli -i wlan0 log_level "$log_level_radio0" && logger -s "*  *  *  Уровень журналирования для wlan0 установлен на $log_level_radio0  *  *  *"
+
+# Установка уровня журналирования для radio1
+hostapd_cli -i wlan1 log_level "$log_level_radio1" && logger -s "*  *  *  Уровень журналирования для wlan1 установлен на $log_level_radio1  *  *  *"
