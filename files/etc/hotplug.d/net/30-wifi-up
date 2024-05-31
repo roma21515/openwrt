@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ "$ACTION" = "add" ] && [ "$INTERFACE" = "wlan0" ] || [ "$INTERFACE" = "wlan1" ]; then
+        /etc/Loglevel-helper-for-hostapd
+fi
+
