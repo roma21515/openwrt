@@ -220,16 +220,23 @@ static bool sfe_cm_find_dev_and_mac_addr(sfe_ip_addr_t *addr, struct net_device 
 
 		dst = (struct dst_entry *)rt;
 	} else {
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 17, 0))
+	#ifndef CONFIG_IPV6
+    // IPv6 отключён – сразу возвращаем ошибку
+    goto ret_fail;
+    
+    #else
+    
+	#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 17, 0))
 		rt6 = rt6_lookup(&init_net, (struct in6_addr *)addr->ip6, 0, 0, NULL, 0);
-#else
+	#else
 		rt6 = rt6_lookup(&init_net, (struct in6_addr *)addr->ip6, 0, 0, 0);
-#endif /*KERNEL_VERSION(4, 17, 0)*/
+	#endif /*KERNEL_VERSION(4, 17, 0)*/
 		if (!rt6) {
 			goto ret_fail;
 		}
 
 		dst = (struct dst_entry *)rt6;
+	#endif /* CONFIG_IPV6 */
 	}
 
 	rcu_read_lock();
