@@ -1,0 +1,60 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+
+script () {
+    dir=/tmp/WG
+#    SUBNET=https://raw.githubusercontent.com/roma21515/OpenWrt_LinkSys_Wrt400n/refs/heads/master/routes_ip
+    DOMAINS=https://github.com/itdoginfo/allow-domains/raw/refs/heads/main/Ukraine/inside-dnsmasq-ipset.lst
+
+    download () {
+        count=0
+        while [ ! -f $dir/$1 ]; do
+        if [ $count -gt 10 ]; then
+            echo Exit
+            exit 1
+        else
+            echo "Try $count"
+            wget --no-check-certificate -P $dir $2
+            count=$((count+1))
+            sleep 5
+        fi
+        done
+    }
+
+    mkdir -p $dir
+
+    # Для 22.03 версии, при ошибке `No buffer space available`
+    #echo "Flush sets"
+    #nft flush ruleset
+
+    echo "Run download lists"
+#    rm -f /$dir/routes_ip && wget --no-check-certificate -P $dir $SUBNET
+#    download routes_ip $SUBNET
+
+    rm -f /$dir/inside-dnsmasq-ipset.lst && wget --no-check-certificate -P $dir $DOMAINS
+    download inside-dnsmasq-ipset.lst $DOMAINS
+
+    cp $dir/inside-dnsmasq-ipset.lst /tmp/dnsmasq.d/domains
+
+    # Для openwrt 21:
+    # sed "s/.*/\/&/" $dir/domains.lst | sed -e "s/.*/ipset=&\/vpn_domains/" > /tmp/dnsmasq.d/domains
+
+    echo "Dnsmasq restart"
+    /etc/init.d/dnsmasq restart
+
+    echo "Firewall restart"
+    /etc/init.d/firewall restart
+}
+
+start () {
+    script
+}
+
+restart () {
+    script
+}
+
+reload () {
+    script
+}
