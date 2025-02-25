@@ -45,6 +45,11 @@ script () {
 
     echo "Firewall restart"
     /etc/init.d/firewall restart
+    
+    sleep 20
+    
+    rm -r $dir
+
 }
 
 start () {
