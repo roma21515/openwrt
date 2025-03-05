@@ -54,21 +54,21 @@ static struct mtd_partition wrt400n_partitions[] = {
 	}, {
 		.name		= "rootfs",
 		.offset		= 0x180000,
-		.size		= 0x660000,
+		.size		= 0xe60000,
 	}, {
 		.name		= "nvram",
-		.offset		= 0x7e0000,
+		.offset		= 0xfe0000,
 		.size		= 0x010000,
 		.mask_flags	= MTD_WRITEABLE,
 	}, {
 		.name		= "caldata",
-		.offset		= 0x7f0000,
+		.offset		= 0xff0000,
 		.size		= 0x010000,
 		.mask_flags	= MTD_WRITEABLE,
 	}, {
 		.name		= "firmware",
 		.offset		= 0x040000,
-		.size		= 0x7a0000,
+		.size		= 0xfa0000,
 	}
 };
 

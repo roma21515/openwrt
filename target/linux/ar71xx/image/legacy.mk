@@ -296,7 +296,7 @@ endef
 Image/Build/WRT400N/buildkernel=$(call MkuImageLzma,$(2),$(3))
 
 define Image/Build/WRT400N
-	$(call Sysupgrade/KRuImage,$(1),$(2),1310720,6488064)
+	$(call Sysupgrade/KRuImage,$(1),$(2),1310720,15073280)
 	if [ -e "$(call sysupname,$(1),$(2))" ]; then \
 		wrt400n $(KDIR_TMP)/vmlinux-$(2).uImage $(KDIR)/root.$(1) $(call factoryname,$(1),$(2)); \
 	fi
