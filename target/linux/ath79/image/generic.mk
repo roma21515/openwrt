@@ -76,6 +76,18 @@ define Device/seama
   SEAMA_SIGNATURE :=
 endef
 
+define Device/WRT400N
+  ATH_SOC := ar7161
+  DEVICE_VENDOR := Linksys
+  DEVICE_MODEL := wrt400n
+  DEVICE_TITLE := Linksys WRT400N
+  DEVICE_PACKAGES := kmod-ath9k luci kmod-owl-loader
+  IMAGE_SIZE := 7616k
+  SUPPORTED_DEVICES += linksys,wrt400n
+endef
+
+TARGET_DEVICES += WRT400N
+
 define Device/8dev_carambola2
   ATH_SOC := ar9331
   DEVICE_TITLE := 8devices Carambola2
