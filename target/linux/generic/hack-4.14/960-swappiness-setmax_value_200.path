@@ -1,0 +1,32 @@
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -3486,7 +3486,7 @@
+ {
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+ 
+-	if (val > 100)
++	if (val > 200)
+ 		return -EINVAL;
+ 
+ 	if (css->parent)
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -127,6 +127,7 @@
+ static int __maybe_unused four = 4;
+ static unsigned long one_ul = 1;
+ static int one_hundred = 100;
++static int two_hundred = 200;
+ static int one_thousand = 1000;
+ #ifdef CONFIG_PRINTK
+ static int ten_thousand = 10000;
+@@ -1355,7 +1356,7 @@
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= &zero,
+-		.extra2		= &one_hundred,
++		.extra2		= &two_hundred,
+ 	},
+ #ifdef CONFIG_HUGETLB_PAGE
+ 	{
+
+
