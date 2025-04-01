@@ -64,7 +64,9 @@
 				"/usr/bin/awk":[ "exec" ],
 				"/usr/bin/tail":[ "exec" ],
 				"/bin/df":[ "exec" ],
-				"/bin/sh":[ "exec" ]
+				"/bin/sh":[ "exec" ],
+				"/etc/init.d/zram":[ "exec" ],
+				"/usr/sbin/ipset":[ "exec" ]
 			},
 			"ubus": {
 				"file": [ "list", "read", "stat" ],
