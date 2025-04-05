@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAX_RETRIES=7
-SLEEP_INTERVAL=2
+SLEEP_INTERVAL=5
 
 # Начальная попытка
 attempt=1
@@ -24,5 +24,6 @@ while [ $attempt -le $MAX_RETRIES ]; do
 done
 
 # Если после всех попыток не удалось восстановить соединение, сообщаем об этом
-logger -s "*  *  * WireGuard не удалось восстановить соединение после $MAX_RETRIES попыток *  *  *"
+logger -s "*  *  * WireGuard не удалось восстановить соединение после $MAX_RETRIES попыток пробуем перезапуск сети *  *  *"
+/etc/init.d/network restart
 exit 1

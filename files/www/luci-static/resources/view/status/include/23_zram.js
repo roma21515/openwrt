@@ -52,7 +52,8 @@ return baseclass.extend({
 
 	render: function(data) {
         var table = E('div', { 'class': 'table' });
-
+		var freeram = data.original_size-data.memory_used;
+		
         function addRow(title, value, max) {
             table.appendChild(E('div', { 'class': 'tr' }, [
                 E('div', { 'class': 'td left', 'width': '33%' }, title),
@@ -62,14 +63,19 @@ return baseclass.extend({
 
         addRow(_('Использовано Zram'), data.original_size, data.device_size);
 		addRow(_('Сжатые данные с оверхедом'), data.memory_used, data.device_size/4);
-
+		
+		table.appendChild(E('div', { 'class': 'tr' }, [
+            E('div', { 'class': 'td left', 'width': '33%' }, _('Увеличено RAM за счет сжатия на :')),
+            E('div', { 'class': 'td left' }, `${freeram.toFixed(2)} MB`)
+        ]));
+		
         table.appendChild(E('div', { 'class': 'tr' }, [
-            E('div', { 'class': 'td left', 'width': '33%' }, _('Пик сжатой памяти за все время')),
+            E('div', { 'class': 'td left', 'width': '33%' }, _('Пик сжатой памяти за все время :')),
             E('div', { 'class': 'td left' }, `${data.max_memory_used.toFixed(2)} MB`)
         ]));
 
         table.appendChild(E('div', { 'class': 'tr' }, [
-            E('div', { 'class': 'td left', 'width': '33%' }, _('Степень сжатия')),
+            E('div', { 'class': 'td left', 'width': '33%' }, _('Степень сжатия :')),
             E('div', { 'class': 'td left' }, `${data.compression_ratio.toFixed(2)}x`)
         ]));
 
