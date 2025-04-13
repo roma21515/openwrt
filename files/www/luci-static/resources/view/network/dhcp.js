@@ -142,10 +142,10 @@ return view.extend({
 		ss = m.section(form.TypedSection, 'ipset', _('IPSet Rules'));
 		ss.anonymous = true;
 		ss.addremove = true;
-		ss.tab('general', _('Список IPset'));
+		ss.tab('general', _('Список доменов для IPset'));
 
 		// list name
-		so = ss.taboption('general', form.DynamicList, 'name', _('Имя IPset'), _('Введи имя списка доменов (по умолчанию vpn_domains)'));
+		so = ss.taboption('general', form.Value, 'name', _('Имя IPset'), _('Введи имя списка доменов (по умолчанию vpn_domains)'));
 		so.optional = false;
 		so.default = 'vpn_domains';
 
