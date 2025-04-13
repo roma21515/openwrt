@@ -5,6 +5,8 @@ CONFIG_FILE="/tmp/dnsmasq.d/custom_domains"
 names=$(grep "list name" /etc/config/dhcp | awk -F "'" '{print $2}')
 domains=$(grep "list domain" /etc/config/dhcp | awk -F "'" '{print $2}')
 
+: > "$CONFIG_FILE"
+
 for name in $names; do
     for domain in $domains; do
         echo "ipset=/$domain/$name" >> "$CONFIG_FILE"
